@@ -1,0 +1,1 @@
+# Spring REST Docs example based on Spring Guru course.
