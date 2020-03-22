@@ -13,15 +13,18 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.restdocs.RestDocumentationExtension;
+import org.springframework.restdocs.payload.FieldDescriptor;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 import static guru.samples.rest.docs.web.controller.BeerController.BASE_URL;
 import static guru.samples.rest.docs.web.model.BeerStyle.IPA;
 import static java.math.BigDecimal.valueOf;
+import static java.util.Arrays.asList;
 import static java.util.UUID.randomUUID;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
@@ -30,6 +33,8 @@ import static org.mockito.Mockito.*;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
+import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
+import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 import static org.springframework.restdocs.request.RequestDocumentation.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -75,10 +80,13 @@ public class BeerControllerWebMvcTest {
                 .andExpect(jsonPath("$.style", is(equalTo(BEER_STYLE.name()))))
                 .andDo(document(BASE_URL,
                         pathParameters(
-                            parameterWithName(BEER_ID_AS_PATH_PARAMETER).description("UUID of desired beer to get.")
+                                parameterWithName(BEER_ID_AS_PATH_PARAMETER).description("UUID of desired beer to get.")
                         ),
                         requestParameters(
-                            parameterWithName(TEST_QUERY_PARAMETER).description("Indicates whether desired beer should be cold or not.")
+                                parameterWithName(TEST_QUERY_PARAMETER).description("Indicates whether desired beer should be cold or not.")
+                        ),
+                        responseFields(
+                                getResponseFields()
                         )
                 ));
 
@@ -98,7 +106,12 @@ public class BeerControllerWebMvcTest {
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id", is(equalTo(BEER_ID.toString()))))
                 .andExpect(jsonPath("$.name", is(equalTo(BEER_NAME))))
-                .andExpect(jsonPath("$.style", is(equalTo(BEER_STYLE.name()))));
+                .andExpect(jsonPath("$.style", is(equalTo(BEER_STYLE.name()))))
+                .andDo(document(BASE_URL,
+                        responseFields(
+                                getResponseFields()
+                        )
+                 ));
 
         verify(beerRepository).save(any(Beer.class));
     }
@@ -117,9 +130,14 @@ public class BeerControllerWebMvcTest {
                 .andExpect(jsonPath("$.id", is(equalTo(BEER_ID.toString()))))
                 .andExpect(jsonPath("$.name", is(equalTo(BEER_NAME))))
                 .andExpect(jsonPath("$.style", is(equalTo(BEER_STYLE.name()))))
-                .andDo(document(BASE_URL, pathParameters(
-                        parameterWithName(BEER_ID_AS_PATH_PARAMETER).description("UUID of desired beer to update.")
-                )));
+                .andDo(document(BASE_URL,
+                        pathParameters(
+                                parameterWithName(BEER_ID_AS_PATH_PARAMETER).description("UUID of desired beer to update.")
+                        ),
+                        responseFields(
+                                getResponseFields()
+                        )
+                ));
 
         verify(beerRepository).save(any(Beer.class));
     }
@@ -161,5 +179,20 @@ public class BeerControllerWebMvcTest {
                 .name(BEER_NAME)
                 .style(BEER_STYLE)
                 .build();
+    }
+
+    private List<FieldDescriptor> getResponseFields() {
+        return asList(
+                fieldWithPath("id").description("Beer ID, generated as UUID by DB sequence generator"),
+                fieldWithPath("version").description("Version number"),
+                fieldWithPath("createdDate").description("Date when beer entity was first registered in system"),
+                fieldWithPath("lastModifiedDate").description("Last date when beer entity was modified"),
+                fieldWithPath("name").description("Beer name"),
+                fieldWithPath("style").description("Beer style"),
+                fieldWithPath("upc").description("UPC of beer"),
+                fieldWithPath("price").description("Beer price"),
+                fieldWithPath("minOnHand").description("Minimal quantity of beer to have on hand"),
+                fieldWithPath("quantityToBrew").description("Quantity of beer to brew in a single order")
+        );
     }
 }
