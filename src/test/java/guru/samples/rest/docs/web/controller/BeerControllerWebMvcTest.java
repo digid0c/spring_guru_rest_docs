@@ -33,8 +33,7 @@ import static org.mockito.Mockito.*;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
-import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
-import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
+import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -110,6 +109,9 @@ public class BeerControllerWebMvcTest {
                 .andDo(document(BASE_URL,
                         responseFields(
                                 getResponseFields()
+                        ),
+                        requestFields(
+                                getRequestFields()
                         )
                  ));
 
@@ -136,6 +138,9 @@ public class BeerControllerWebMvcTest {
                         ),
                         responseFields(
                                 getResponseFields()
+                        ),
+                        requestFields(
+                                getRequestFields()
                         )
                 ));
 
@@ -187,6 +192,21 @@ public class BeerControllerWebMvcTest {
                 fieldWithPath("version").description("Version number"),
                 fieldWithPath("createdDate").description("Date when beer entity was first registered in system"),
                 fieldWithPath("lastModifiedDate").description("Last date when beer entity was modified"),
+                fieldWithPath("name").description("Beer name"),
+                fieldWithPath("style").description("Beer style"),
+                fieldWithPath("upc").description("UPC of beer"),
+                fieldWithPath("price").description("Beer price"),
+                fieldWithPath("minOnHand").description("Minimal quantity of beer to have on hand"),
+                fieldWithPath("quantityToBrew").description("Quantity of beer to brew in a single order")
+        );
+    }
+
+    private List<FieldDescriptor> getRequestFields() {
+        return asList(
+                fieldWithPath("id").ignored(),
+                fieldWithPath("version").ignored(),
+                fieldWithPath("createdDate").ignored(),
+                fieldWithPath("lastModifiedDate").ignored(),
                 fieldWithPath("name").description("Beer name"),
                 fieldWithPath("style").description("Beer style"),
                 fieldWithPath("upc").description("UPC of beer"),
