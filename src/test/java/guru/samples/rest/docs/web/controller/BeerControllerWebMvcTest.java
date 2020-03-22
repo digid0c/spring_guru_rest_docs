@@ -18,6 +18,7 @@ import org.springframework.restdocs.payload.FieldDescriptor;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.math.BigDecimal;
+import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -191,16 +192,36 @@ public class BeerControllerWebMvcTest {
 
     private List<FieldDescriptor> getResponseFields() {
         return asList(
-                fieldWithPath("id").description("Beer ID, generated as UUID by DB sequence generator"),
-                fieldWithPath("version").description("Version number"),
-                fieldWithPath("createdDate").description("Date when beer entity was first registered in system"),
-                fieldWithPath("lastModifiedDate").description("Last date when beer entity was modified"),
-                fieldWithPath("name").description("Beer name"),
-                fieldWithPath("style").description("Beer style"),
-                fieldWithPath("upc").description("UPC of beer"),
-                fieldWithPath("price").description("Beer price"),
-                fieldWithPath("minOnHand").description("Minimal quantity of beer to have on hand"),
-                fieldWithPath("quantityToBrew").description("Quantity of beer to brew in a single order")
+                fieldWithPath("id")
+                        .description("Beer ID, generated as UUID by DB sequence generator")
+                        .type(UUID.class),
+                fieldWithPath("version")
+                        .description("Version number")
+                        .type(Long.class),
+                fieldWithPath("createdDate")
+                        .description("Date when beer entity was first registered in system")
+                        .type(OffsetDateTime.class),
+                fieldWithPath("lastModifiedDate")
+                        .description("Last date when beer entity was modified")
+                        .type(OffsetDateTime.class),
+                fieldWithPath("name")
+                        .description("Beer name")
+                        .type(String.class),
+                fieldWithPath("style")
+                        .description("Beer style")
+                        .type(BeerStyle.class),
+                fieldWithPath("upc")
+                        .description("UPC of beer")
+                        .type(Long.class),
+                fieldWithPath("price")
+                        .description("Beer price")
+                        .type(BigDecimal.class),
+                fieldWithPath("minOnHand")
+                        .description("Minimal quantity of beer to have on hand")
+                        .type(Integer.class),
+                fieldWithPath("quantityToBrew")
+                        .description("Quantity of beer to brew in a single order")
+                        .type(Integer.class)
         );
     }
 
@@ -211,12 +232,24 @@ public class BeerControllerWebMvcTest {
                 fields.withPath("version").ignored(),
                 fields.withPath("createdDate").ignored(),
                 fields.withPath("lastModifiedDate").ignored(),
-                fields.withPath("name").description("Beer name"),
-                fields.withPath("style").description("Beer style"),
-                fields.withPath("upc").description("UPC of beer"),
-                fields.withPath("price").description("Beer price"),
-                fields.withPath("minOnHand").description("Minimal quantity of beer to have on hand"),
-                fields.withPath("quantityToBrew").description("Quantity of beer to brew in a single order")
+                fields.withPath("name")
+                        .description("Beer name")
+                        .type(String.class),
+                fields.withPath("style")
+                        .description("Beer style")
+                        .type(BeerStyle.class),
+                fields.withPath("upc")
+                        .description("UPC of beer")
+                        .type(Long.class),
+                fields.withPath("price")
+                        .description("Beer price")
+                        .type(BigDecimal.class),
+                fields.withPath("minOnHand")
+                        .description("Minimal quantity of beer to have on hand")
+                        .type(Integer.class),
+                fields.withPath("quantityToBrew")
+                        .description("Quantity of beer to brew in a single order")
+                        .type(Integer.class)
         );
     }
 
