@@ -22,6 +22,7 @@ public class BeerDTO {
     private OffsetDateTime lastModifiedDate;
 
     @NotBlank
+    @Size(min = 1, max = 75)
     private String name;
 
     @NotNull
