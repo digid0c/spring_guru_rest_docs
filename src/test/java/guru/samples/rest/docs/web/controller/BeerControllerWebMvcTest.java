@@ -30,8 +30,7 @@ import static org.mockito.Mockito.*;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
-import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
-import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
+import static org.springframework.restdocs.request.RequestDocumentation.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -44,6 +43,7 @@ public class BeerControllerWebMvcTest {
     private static final UUID BEER_ID = randomUUID();
     private static final String BEER_ID_AS_PATH_PARAMETER = "id";
     private static final String BASE_URL_WITH_BEER_ID = BASE_URL + "/{" + BEER_ID_AS_PATH_PARAMETER + "}";
+    private static final String TEST_QUERY_PARAMETER = "isCold";
 
     private static final String BEER_NAME = "Mango Bobs";
     private static final BeerStyle BEER_STYLE = IPA;
@@ -67,14 +67,20 @@ public class BeerControllerWebMvcTest {
         when(beerRepository.findById(BEER_ID)).thenReturn(Optional.of(beer));
 
         mockMvc.perform(get(BASE_URL_WITH_BEER_ID, BEER_ID)
-                .accept(APPLICATION_JSON))
+                .accept(APPLICATION_JSON)
+                .param(TEST_QUERY_PARAMETER, "true"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", is(equalTo(BEER_ID.toString()))))
                 .andExpect(jsonPath("$.name", is(equalTo(BEER_NAME))))
                 .andExpect(jsonPath("$.style", is(equalTo(BEER_STYLE.name()))))
-                .andDo(document(BASE_URL, pathParameters(
-                        parameterWithName(BEER_ID_AS_PATH_PARAMETER).description("UUID of desired beer to get.")
-                )));
+                .andDo(document(BASE_URL,
+                        pathParameters(
+                            parameterWithName(BEER_ID_AS_PATH_PARAMETER).description("UUID of desired beer to get.")
+                        ),
+                        requestParameters(
+                            parameterWithName(TEST_QUERY_PARAMETER).description("Indicates whether desired beer should be cold or not.")
+                        )
+                ));
 
         verify(beerRepository).findById(BEER_ID);
     }
