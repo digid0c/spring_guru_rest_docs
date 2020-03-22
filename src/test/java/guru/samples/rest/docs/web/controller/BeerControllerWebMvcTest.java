@@ -42,7 +42,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.util.StringUtils.collectionToDelimitedString;
 
 @ExtendWith(RestDocumentationExtension.class)
-@AutoConfigureRestDocs
+@AutoConfigureRestDocs(uriScheme = "https", uriHost = "guru.samples.rest.docs", uriPort = 8083)
 @WebMvcTest(BeerController.class)
 @ComponentScan(basePackages = "guru.samples.rest.docs.web.mapper")
 public class BeerControllerWebMvcTest {
