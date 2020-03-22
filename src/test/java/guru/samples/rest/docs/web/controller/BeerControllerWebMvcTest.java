@@ -80,7 +80,7 @@ public class BeerControllerWebMvcTest {
                 .andExpect(jsonPath("$.id", is(equalTo(BEER_ID.toString()))))
                 .andExpect(jsonPath("$.name", is(equalTo(BEER_NAME))))
                 .andExpect(jsonPath("$.style", is(equalTo(BEER_STYLE.name()))))
-                .andDo(document(BASE_URL,
+                .andDo(document(BASE_URL + "-find-by-id",
                         pathParameters(
                                 parameterWithName(BEER_ID_AS_PATH_PARAMETER).description("UUID of desired beer to get.")
                         ),
@@ -109,7 +109,7 @@ public class BeerControllerWebMvcTest {
                 .andExpect(jsonPath("$.id", is(equalTo(BEER_ID.toString()))))
                 .andExpect(jsonPath("$.name", is(equalTo(BEER_NAME))))
                 .andExpect(jsonPath("$.style", is(equalTo(BEER_STYLE.name()))))
-                .andDo(document(BASE_URL,
+                .andDo(document(BASE_URL + "-create-new",
                         responseFields(
                                 getResponseFields()
                         ),
@@ -135,7 +135,7 @@ public class BeerControllerWebMvcTest {
                 .andExpect(jsonPath("$.id", is(equalTo(BEER_ID.toString()))))
                 .andExpect(jsonPath("$.name", is(equalTo(BEER_NAME))))
                 .andExpect(jsonPath("$.style", is(equalTo(BEER_STYLE.name()))))
-                .andDo(document(BASE_URL,
+                .andDo(document(BASE_URL + "-update-existing",
                         pathParameters(
                                 parameterWithName(BEER_ID_AS_PATH_PARAMETER).description("UUID of desired beer to update.")
                         ),

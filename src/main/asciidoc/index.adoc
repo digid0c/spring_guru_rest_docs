@@ -8,20 +8,96 @@ Sample application demonstrating how to use Spring REST Docs with JUnit 5.
 `BeerControllerWebMvcTest` makes a call to a very simple service and produces three
 documentation snippets.
 
-One showing how to make a request using cURL:
+`FIND BEER BY ID`
 
-include::{snippets}/orders/curl-request.adoc[]
+Request using cURL:
 
-One showing the HTTP request:
+include::{snippets}/api/v1/beer-find-by-id/curl-request.adoc[]
 
-include::{snippets}/orders/http-request.adoc[]
+HTTP request:
 
-And one showing the HTTP response:
+include::{snippets}/api/v1/beer-find-by-id/http-request.adoc[]
 
-include::{snippets}/orders/http-response.adoc[]
+Path parameters:
+
+include::{snippets}/api/v1/beer-find-by-id/path-parameters.adoc[]
+
+Request parameters:
+
+include::{snippets}/api/v1/beer-find-by-id/request-parameters.adoc[]
+
+HTTP response:
+
+include::{snippets}/api/v1/beer-find-by-id/http-response.adoc[]
 
 Response Body:
-include::{snippets}/orders/response-body.adoc[]
+
+include::{snippets}/api/v1/beer-find-by-id/response-body.adoc[]
 
 Response Fields:
-include::{snippets}/orders/response-fields.adoc[]
+
+include::{snippets}/api/v1/beer-find-by-id/response-fields.adoc[]
+
+`CREATE NEW BEER`
+
+Request using cURL:
+
+include::{snippets}/api/v1/beer-create-new/curl-request.adoc[]
+
+HTTP request:
+
+include::{snippets}/api/v1/beer-create-new/http-request.adoc[]
+
+Request body:
+
+include::{snippets}/api/v1/beer-create-new/request-body.adoc[]
+
+Request fields:
+
+include::{snippets}/api/v1/beer-create-new/request-fields.adoc[]
+
+HTTP response:
+
+include::{snippets}/api/v1/beer-create-new/http-response.adoc[]
+
+Response Body:
+
+include::{snippets}/api/v1/beer-find-by-id/response-body.adoc[]
+
+Response Fields:
+
+include::{snippets}/api/v1/beer-find-by-id/response-fields.adoc[]
+
+`UPDATE EXISTING BEER`
+
+Request using cURL:
+
+include::{snippets}/api/v1/beer-update-existing/curl-request.adoc[]
+
+HTTP request:
+
+include::{snippets}/api/v1/beer-update-existing/http-request.adoc[]
+
+Path parameters:
+
+include::{snippets}/api/v1/beer-update-existing/path-parameters.adoc[]
+
+Request body:
+
+include::{snippets}/api/v1/beer-update-existing/request-body.adoc[]
+
+Request fields:
+
+include::{snippets}/api/v1/beer-update-existing/request-fields.adoc[]
+
+HTTP response:
+
+include::{snippets}/api/v1/beer-update-existing/http-response.adoc[]
+
+Response Body:
+
+include::{snippets}/api/v1/beer-update-existing/response-body.adoc[]
+
+Response Fields:
+
+include::{snippets}/api/v1/beer-update-existing/response-fields.adoc[]
